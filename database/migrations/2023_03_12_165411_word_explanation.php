@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('word_explanation', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('id_table_words');       //kata yang dijelasin
+            $table->bigInteger('id_table_languages');   //jelasin pake bahasa apa
+            $table->text('explanation');                //penjelasannya
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};
