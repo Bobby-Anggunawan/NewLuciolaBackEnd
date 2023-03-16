@@ -16,9 +16,11 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->binary('flag');                     //foto bendera bahasa ini(kalo bisa kotak)
-            $table->binary('background')->nullable();   //foto lain untuk bahasa ini. bisa pemandangan, makanan, dll
             $table->timestamps();
         });
+
+        //foto lain untuk bahasa ini. bisa pemandangan, makanan, dll
+        DB::statement("ALTER TABLE languages ADD background MEDIUMBLOB NULL");
     }
 
     /**
