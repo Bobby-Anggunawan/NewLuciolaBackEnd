@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->text('word');
             $table->bigInteger('id_table_languages');   //id dari table languages, sesuai kata ini
-            $table->binary('background')->nullable();   //foto yang menggambarkan kata ini
+            $table->string('background')->nullable();   //foto yang menggambarkan kata ini
             $table->enum('penguasaan', Enums::$penguasaanKata);
             $table->timestamps();
         });

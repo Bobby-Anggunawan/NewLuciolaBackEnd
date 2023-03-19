@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('id_table_languages');   //bahasa apa lagu ini
             $table->text('title');                      //judul lagu
             $table->text('artist');                     //nama penyanyi
-            $table->binary('cover')->nullable();        //cover(gambar) dari lagu ini
+            $table->string('cover')->nullable();        //cover(gambar) dari lagu ini
             $table->timestamps();
         });
     }

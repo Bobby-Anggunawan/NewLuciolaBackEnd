@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->binary('flag');                     //foto bendera bahasa ini(kalo bisa kotak)
+            $table->string('flag');                     //foto bendera bahasa ini(kalo bisa kotak)
             $table->timestamps();
         });
 
