@@ -22,9 +22,9 @@ class InputData extends Controller
             //save
             $fotoBackgroundPath = null;
 
-            $aFile = $request->file('background');
             if ($request->hasFile('background')) {
-                $fotoBackgroundPath = $aFile->storeAs('images', $kata.$idBahasa.".".$aFile->getClientOriginalExtension());
+                $aFile = $request->file('background');
+                $fotoBackgroundPath = $aFile->storeAs('images/word', $kata.$idBahasa.".".$aFile->getClientOriginalExtension());
             }
 
             $idWord = DB::table('words')->insert([
@@ -67,8 +67,23 @@ class InputData extends Controller
 
     }
 
-    function inputLagu($idBahasa, $fotoCover, $judul, $namaPenyanyi){
-        throw new Exception("Belum diimplementasikan");
+    function inputLagu(Request $request){
+        $languages = $request->input('id_table_languages');
+        $title = $request->input('title');
+        $artist = $request->input('artist');
+
+        $cover = null;
+        if ($request->hasFile('cover')) {
+            $aFile = $request->file('cover');
+            $cover = $aFile->storeAs('images/cover', $title." - ".$artist.".".$aFile->getClientOriginalExtension());
+        }
+
+        $idLagu = DB::table('songs')->insert([
+            'id_table_languages' => $languages,
+            'title' => $title,
+            'artist' => $artist,
+            'cover' => $cover
+        ]);
     }
 
     //segmen di sini kayak verse, chorus

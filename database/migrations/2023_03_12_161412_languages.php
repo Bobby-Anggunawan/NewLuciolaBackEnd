@@ -16,11 +16,9 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->string('flag');                     //foto bendera bahasa ini(kalo bisa kotak)
+            $table->string('background');
             $table->timestamps();
         });
-
-        //foto lain untuk bahasa ini. bisa pemandangan, makanan, dll
-        DB::statement("ALTER TABLE languages ADD background MEDIUMBLOB NULL");
     }
 
     /**
