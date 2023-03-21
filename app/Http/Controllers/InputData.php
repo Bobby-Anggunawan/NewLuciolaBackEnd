@@ -88,7 +88,65 @@ class InputData extends Controller
 
     //segmen di sini kayak verse, chorus
     //indeks di sini berapa posisi lirik ini di segmen ini
-    function tambahBarisLirikLagu($idLagu, $listIdKata, $listArti, $segmen, $indeks){
-        throw new Exception("Belum diimplementasikan");
+    function tambahBarisLirikLagu(Request $request){
+
+        //untuk di tabel lyrics_contents
+        $idTabellyrics = $request->input('id_table_lyrics');
+
+        //masukin ke tabel lyrics
+        $id_table_songs = $request->input('id_table_songs');
+        $index = $request->input('index');
+        $segmen = $request->input('segmen');
+        $segmen_index = $request->input('segmen_index');
+
+        if(
+            DB::table('lyrics')
+                ->where("id_table_songs", $id_table_songs)
+                ->where("index", $index)
+                ->where("segmen", $segmen)
+                ->where("segmen_index", $segmen_index)->exists()
+        ){
+            $idTabellyrics = DB::table('lyrics')->insert([
+                'id_table_songs' => $id_table_songs,
+                'index' => $index,
+                'segmen' => $segmen,
+                'segmen_index' => $segmen_index
+            ]);
+        }
+
+
+        //list, masukkin satu persatu bersamaan
+        $lyrics_contents = json_decode($request->input('lyrics_contents'));
+        $lyrics_contents_translation = json_decode($request->input('lyrics_contents_translation'));
+
+        echo $lyrics_contents;
+
+        
+        for ($x=0; $x<count((array)$lyrics_contents); $x++){
+
+            $idkontenLirik = DB::table('lyrics_contents')->insert([
+                'id_table_lyrics' => $idTabellyrics,
+                'index' => $lyrics_contents[$x]->{"index"},
+                'id_table_words' => $lyrics_contents[$x]->{"id_table_words"}
+            ]);
+
+            DB::table('lyrics_contents_translation')->insert([
+                'id_table_lyrics_contents' => $idkontenLirik,
+                'id_table_words' => $lyrics_contents_translation[$x]
+            ]);
+
+        }
+
+        //list, masukkin satu persatu
+        $lyrics_explanation = json_decode($request->input('lyrics_explanation'));
+
+        foreach ($lyrics_explanation as $penjelasan){
+            DB::table('lyrics_explanation')->insert([
+                'id_table_lyrics' => $idTabellyrics,
+                'id_table_languages' => $penjelasan->{"id_table_languages"},
+                'explanation' => $penjelasan->{"explanation"},
+            ]);
+        }
+
     }
 }

@@ -22,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/word', [InputData::class, 'inputKata']);
 
 Route::post('/song', [InputData::class, 'inputLagu']);
+
+Route::post('/lyrics', [InputData::class, 'tambahBarisLirikLagu']);
